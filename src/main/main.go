@@ -23,7 +23,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	client.Log(true)
+	//client.Log(true)
 
 	if err := client.InitLongPoll(0, 2); err != nil {
 		log.Panic(err)
@@ -37,50 +37,62 @@ func main() {
 	go InitConnectionPool()
 
 	for update := range updates {
-		if update.Message == nil {
+		if update.Message == nil || !update.IsNewMessage() || update.Message.Outbox() {
 			continue
 		}
 
-		if update.IsNewMessage() {
-			if strings.HasPrefix(update.Message.Text, "/start") {
-				go StartCommand(update)
-			}
+		command := strings.ToLower(update.Message.Text)
 
-			if strings.HasPrefix(update.Message.Text, "/help") {
-				go HelpCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/save") {
-				go SaveCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/full") {
-				go FullCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/today") {
-				go TodayCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/tomorrow") {
-				go TomorrowCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/get") {
-				go GetCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/status") {
-				go StatusCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/update") {
-				go UpdateCommand(update)
-			}
-
-			if strings.HasPrefix(update.Message.Text, "/delete") {
-				go DeleteCommand(update)
-			}
+		if strings.HasPrefix(command, "start") {
+			go StartCommand(update)
+			continue
 		}
+
+		if strings.HasPrefix(command, "help") {
+			go HelpCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "save") {
+			go SaveCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "full") {
+			go FullCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "today") {
+			go TodayCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "tomorrow") {
+			go TomorrowCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "get") {
+			go GetCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "status") {
+			go StatusCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "update") {
+			go UpdateCommand(update)
+			continue
+		}
+
+		if strings.HasPrefix(command, "delete") {
+			go DeleteCommand(update)
+			continue
+		}
+
+		go AnythingCommand(update)
 	}
 }

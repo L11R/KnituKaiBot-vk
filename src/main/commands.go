@@ -15,12 +15,17 @@ import (
 )
 
 func StartCommand(update vkapi.LPUpdate) {
-	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Напишите команду /help, чтобы узнать всевозможные команды.")
+	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Напишите команду help, чтобы узнать всевозможные команды.")
 	client.SendMessage(msg)
 }
 
 func HelpCommand(update vkapi.LPUpdate) {
-	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\n/today - расписание на сегодня.\n/tomorrow - расписание на завтра.\n/get 0-6 - расписание на нужный день.\nНапример /get 3 - на среду.\n\n/save - сохраняет вашу группу и её расписание.\n/update - обновляет расписание вашей группы.\n/delete - полностью удаляет ваш профиль из бота.\n/status - отображает текущий статус.")
+	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\ntoday - расписание на сегодня.\ntomorrow - расписание на завтра.\nget 0-6 - расписание на нужный день.\nНапример get 3 - на среду.\n\nsave - сохраняет вашу группу и её расписание.\nupdate - обновляет расписание вашей группы.\ndelete - полностью удаляет ваш профиль из бота.\nstatus - отображает текущий статус.")
+	client.SendMessage(msg)
+}
+
+func AnythingCommand(update vkapi.LPUpdate) {
+	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\ntoday - расписание на сегодня.\ntomorrow - расписание на завтра.\nget 0-6 - расписание на нужный день.\nНапример get 3 - на среду.\n\nsave - сохраняет вашу группу и её расписание.\nupdate - обновляет расписание вашей группы.\ndelete - полностью удаляет ваш профиль из бота.\nstatus - отображает текущий статус.")
 	client.SendMessage(msg)
 }
 
@@ -149,7 +154,7 @@ func SaveCommand(update vkapi.LPUpdate) {
 			client.SendMessage(msg)
 		}
 	} else {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Пример: <code>/save 4108</code>, чтобы сохранить группу 4108. Замените этот номер на любой другой.")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Пример: save 4108, чтобы сохранить группу 4108. Замените этот номер на любой другой.")
 		client.SendMessage(msg)
 	}
 }
@@ -340,7 +345,7 @@ func GetCommand(update vkapi.LPUpdate) {
 			client.SendMessage(msg)
 		}
 	} else {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Пример: <code>/get 3</code>, чтобы получить расписание на среду.")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Пример: get 3, чтобы получить расписание на среду.")
 		client.SendMessage(msg)
 	}
 }
