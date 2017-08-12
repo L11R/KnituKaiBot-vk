@@ -3,10 +3,10 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/Dimonchik0036/vk-api"
 	"github.com/tidwall/gjson"
 	r "gopkg.in/gorethink/gorethink.v3"
 	"gopkg.in/resty.v0"
-	"github.com/Dimonchik0036/vk-api"
 	"log"
 	"regexp"
 	"strconv"
@@ -20,7 +20,7 @@ func StartCommand(update vkapi.LPUpdate) {
 }
 
 func HelpCommand(update vkapi.LPUpdate) {
-	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\n/today - расписание на сегодня.\n/tomorrow - расписание на завтра.\n/get 0-6 - расписание на нужный день.\nНапример /get 3 - на среду.\n\nВсе эти данные можно также получить посредством inline-режима!\n\n/save - сохраняет вашу группу и её расписание.\n/update - обновляет расписание вашей группы.\n/delete - полностью удаляет ваш профиль из бота.\n/status - отображает текущий статус.")
+	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\n/today - расписание на сегодня.\n/tomorrow - расписание на завтра.\n/get 0-6 - расписание на нужный день.\nНапример /get 3 - на среду.\n\n/save - сохраняет вашу группу и её расписание.\n/update - обновляет расписание вашей группы.\n/delete - полностью удаляет ваш профиль из бота.\n/status - отображает текущий статус.")
 	client.SendMessage(msg)
 }
 
@@ -212,7 +212,7 @@ func FullCommand(update vkapi.LPUpdate) {
 		text := ""
 
 		// Цикл по дням недели
-		for i, _ := range group.Schedule {
+		for i := range group.Schedule {
 			// Добавляем к существующему сообщению день недели
 			text += GetDayName(i) + "\n"
 			text += GetDayText(group.Schedule[i])
