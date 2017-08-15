@@ -14,17 +14,12 @@ import (
 	"time"
 )
 
-func StartCommand(update vkapi.LPUpdate) {
-	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Напишите команду help, чтобы узнать всевозможные команды.")
+func AnythingCommand(update vkapi.LPUpdate) {
+	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Чтобы начать использование бота тебе достаточно сохранить свою группу командой такого вида: save 4108. Разумеется можно указать любую другую группу. После этого все команды станут доступны. Команда для краткая справки по всем доступным командам: help")
 	client.SendMessage(msg)
 }
 
 func HelpCommand(update vkapi.LPUpdate) {
-	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\ntoday - расписание на сегодня.\ntomorrow - расписание на завтра.\nget 0-6 - расписание на нужный день.\nНапример get 3 - на среду.\n\nsave - сохраняет вашу группу и её расписание.\nupdate - обновляет расписание вашей группы.\ndelete - полностью удаляет ваш профиль из бота.\nstatus - отображает текущий статус.")
-	client.SendMessage(msg)
-}
-
-func AnythingCommand(update vkapi.LPUpdate) {
 	msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Список команд:\ntoday - расписание на сегодня.\ntomorrow - расписание на завтра.\nget 0-6 - расписание на нужный день.\nНапример get 3 - на среду.\n\nsave - сохраняет вашу группу и её расписание.\nupdate - обновляет расписание вашей группы.\ndelete - полностью удаляет ваш профиль из бота.\nstatus - отображает текущий статус.")
 	client.SendMessage(msg)
 }
@@ -146,7 +141,7 @@ func SaveCommand(update vkapi.LPUpdate) {
 			if err == nil {
 				msg = vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Cохранено!")
 			} else {
-				msg = vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+				msg = vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "В процессе сохранения группы что-то пошло не так... Возможно сервер с актуальным расписанием недоступен.")
 			}
 			client.SendMessage(msg)
 		} else {
@@ -226,7 +221,7 @@ func FullCommand(update vkapi.LPUpdate) {
 		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), text)
 		client.SendMessage(msg)
 	} else {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так... Похоже ты ещё не сохранил свою группу.")
 		client.SendMessage(msg)
 	}
 }
@@ -257,7 +252,7 @@ func TodayCommand(update vkapi.LPUpdate) {
 			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), text)
 			client.SendMessage(msg)
 		} else {
-			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так... Похоже ты ещё не сохранил свою группу.")
 			client.SendMessage(msg)
 		}
 	} else {
@@ -292,7 +287,7 @@ func TomorrowCommand(update vkapi.LPUpdate) {
 			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), text)
 			client.SendMessage(msg)
 		} else {
-			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+			msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так... Похоже ты ещё не сохранил свою группу.")
 			client.SendMessage(msg)
 		}
 	} else {
@@ -334,7 +329,7 @@ func GetCommand(update vkapi.LPUpdate) {
 				msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), text)
 				client.SendMessage(msg)
 			} else {
-				msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+				msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так... Похоже ты ещё не сохранил свою группу.")
 				client.SendMessage(msg)
 			}
 		} else if day == 6 {
@@ -373,7 +368,7 @@ func StatusCommand(update vkapi.LPUpdate) {
 		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), text)
 		client.SendMessage(msg)
 	} else {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так... Похоже ты ещё не сохранил свою группу.")
 		client.SendMessage(msg)
 	}
 }
@@ -394,7 +389,7 @@ func UpdateCommand(update vkapi.LPUpdate) {
 		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Обновлено!")
 		client.SendMessage(msg)
 	} else {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "В процессе обновления расписания твоей группы что-то пошло не так... Возможно сервер с актуальным расписанием недоступен.")
 		client.SendMessage(msg)
 	}
 }
@@ -402,7 +397,7 @@ func UpdateCommand(update vkapi.LPUpdate) {
 func DeleteCommand(update vkapi.LPUpdate) {
 	_, err := r.Table("users").Get(update.Message.FromID).Delete().RunWrite(session)
 	if err != nil {
-		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Что-то пошло не так...")
+		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "В процессе удаления твоего профиля из базы что-то пошло не так... Попробуй позже.")
 		client.SendMessage(msg)
 	} else {
 		msg := vkapi.NewMessage(vkapi.NewDstFromUserID(update.Message.FromID), "Удалено!")

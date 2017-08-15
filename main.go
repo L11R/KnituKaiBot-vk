@@ -43,11 +43,6 @@ func main() {
 
 		command := strings.ToLower(update.Message.Text)
 
-		if strings.HasPrefix(command, "start") {
-			go StartCommand(update)
-			continue
-		}
-
 		if strings.HasPrefix(command, "help") {
 			go HelpCommand(update)
 			continue
