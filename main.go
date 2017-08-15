@@ -8,10 +8,6 @@ import (
 	"os"
 )
 
-const (
-	dbUrl = "krasovsky.me"
-)
-
 var (
 	client  *vkapi.Client
 	session *r.Session
