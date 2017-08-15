@@ -5,6 +5,7 @@ import (
 	r "gopkg.in/gorethink/gorethink.v3"
 	"log"
 	"strings"
+	"os"
 )
 
 const (
@@ -18,7 +19,13 @@ var (
 
 func main() {
 	var err error
-	client, err = vkapi.NewClientFromToken("b6f810fd39fbc0d2f562384f58e78ac8ffbae986f97267e1f116474396e61ce8afd260a9f96a4bf97ac4b")
+
+	token := os.Getenv("TOKEN")
+	if token == "" {
+		log.Fatal("TOKEN env variable not specified!")
+	}
+
+	client, err = vkapi.NewClientFromToken(token)
 	if err != nil {
 		log.Panic(err)
 	}
