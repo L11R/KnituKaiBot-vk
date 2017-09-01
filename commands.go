@@ -230,7 +230,7 @@ func TodayCommand(update vkapi.LPUpdate) {
 	// Получаем номер текущего дня
 	day := int(time.Now().Weekday()) - 1
 
-	if day != -1 {
+	if day != 6 {
 		// Получаем из базы нужную информацию
 		user, err := GetUser(update.Message.FromID)
 		if err != nil {
@@ -265,7 +265,7 @@ func TomorrowCommand(update vkapi.LPUpdate) {
 	// Получаем номер завтрашнего дня
 	day := int(time.Now().Weekday())
 
-	if day != 0 {
+	if day != 6 {
 		// Получаем из базы нужную информацию
 		user, err := GetUser(update.Message.FromID)
 		if err != nil {
