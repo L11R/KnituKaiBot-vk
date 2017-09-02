@@ -181,15 +181,41 @@ func GetDayText(subjects []map[string]string) string {
 	// Цикл по занятиям
 	for _, elem := range subjects {
 		// Добавляем к существующему сообщению новое занятие
-		text += fmt.Sprintf("%s %s\n%s\n%s, %s, %s, %s\n\n",
-			elem["subjectTime"],
-			elem["subjectWeek"],
-			elem["subjectName"],
-			elem["subjectType"],
-			elem["buildNum"],
-			elem["cabinetNum"],
-			elem["teacherName"],
-		)
+		if elem["subjectTime"] != "" {
+			text += fmt.Sprintf("%s", elem["subjectTime"])
+		} else {
+			text += "TIME UNDEFINED"
+		}
+
+		if elem["subjectWeek"] != "" {
+			text += fmt.Sprintf(" %s\n", elem["subjectWeek"])
+		} else {
+			text += "\n"
+		}
+
+		if elem["subjectName"] != "" {
+			text += fmt.Sprintf("%s\n", elem["subjectName"])
+		} else {
+			text += "SUBJECT NAME UNDEFINED\n"
+		}
+
+		if elem["subjectType"] != "" {
+			text += fmt.Sprintf("%s", elem["subjectType"])
+		}
+
+		if elem["buildNum"] != "" {
+			text += fmt.Sprintf(", %s", elem["buildNum"])
+		}
+
+		if elem["cabinetNum"] != "" {
+			text += fmt.Sprintf(", %s", elem["cabinetNum"])
+		}
+
+		if elem["teacherName"] != "" {
+			text += fmt.Sprintf(", %s", elem["teacherName"])
+		}
+
+		text += "\n\n"
 	}
 
 	return text
